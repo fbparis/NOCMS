@@ -4,8 +4,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 
 $hostname = $_SERVER['HTTP_HOST'];
 
-$exclude_file = array('search','legal');
-$exclude_dir = array('_dev');
+$exclude_file = array();
+$exclude_dir = array();
 
 $base = dirname(__FILE__) . '/.pages';
 $stack = array($base);
