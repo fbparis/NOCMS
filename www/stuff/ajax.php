@@ -5,7 +5,7 @@ if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	
 	echo json_encode(array(
 		'dyn_ip_address'=>$_SERVER['REMOTE_ADDR'],
-		'dyn_session_datas'=>print_r($_SESSION, true
-		)));	
+		'dyn_session_datas'=>print_r($_SESSION, true)
+		));	
 } else echo '{}';
 ?>
