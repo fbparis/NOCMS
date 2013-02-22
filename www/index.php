@@ -1,4 +1,6 @@
 <?php
+header('X-Powered-By: https://github.com/fbparis/NOCMS', true); 
+
 class NOCMS {
 	const pages = '/.pages%s.php';
 	const templates = '/.templates/%s.php';
@@ -27,11 +29,6 @@ class NOCMS {
 		$content = @file_get_contents($f);
 		if (false !== $content) self::$lastModified = max(self::$lastModified, @filemtime($f));
 		return $content;
-	}
-	
-	public static function add_header($name, $content) {
-		self::$cachable = false;
-		if (!array_key_exists($name, self::$headers)) self::$headers[$name] = $content;
 	}
 	
 	public static function is_googlebot() {
@@ -66,6 +63,7 @@ class NOCMS {
 			if (is_readable(dirname(__FILE__) . sprintf(self::templates, self::$template))) {
 				ob_start();
 				include dirname(__FILE__) . sprintf(self::templates, self::$template);
+				if (@count(headers_list()) > 1) self::$cachable = false;
 				if ((self::$lastModified !== null) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
 					foreach (get_included_files() as $filename) self::$lastModified = max(self::$lastModified, @filemtime($filename));
 					header('Last-Modified: ' . gmdate('D, d M Y H:i:s T', self::$lastModified), true);
