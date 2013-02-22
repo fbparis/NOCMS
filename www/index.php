@@ -14,7 +14,6 @@ class NOCMS {
 
 	protected static $isGooglebot = null;
 	protected static $cachable = true;
-	protected static $headers = array();
 	protected static $html = '';
 
 	public static function set_template($t) {
