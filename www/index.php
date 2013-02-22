@@ -1,6 +1,4 @@
 <?php
-header('X-Powered-By: https://github.com/fbparis/NOCMS', true); 
-
 class NOCMS {
 	const pages = '/.pages%s.php';
 	const templates = '/.templates/%s.php';
@@ -56,6 +54,7 @@ class NOCMS {
 	}
 	
 	public static function init($cache=true) {
+		header('X-Powered-By: https://github.com/fbparis/NOCMS', true); 
 		list(self::$uri, self::$args) = preg_split('/\?/s', $_SERVER['REQUEST_URI'], 2);
 		self::$uri = preg_replace('#/[/.~]+#s', '/', self::$uri);		
 		self::$cachable = $cache && !self::$args && in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'));
