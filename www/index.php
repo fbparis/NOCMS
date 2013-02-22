@@ -51,6 +51,7 @@ class NOCMS {
 		$filename = dirname(__FILE__) . sprintf(self::cache, self::$uri);
 		@mkdir(dirname($filename), 0777, true);
 		@file_put_contents($filename, self::$html);
+		@chmod($filename, 0666);
 	}
 	
 	public static function init($cache=true) {
