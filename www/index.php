@@ -39,8 +39,8 @@ class NOCMS {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		    if (stripos($ua, $ua_string) === false) self::$is->$ua_string = false; 
 			else {
-				if (self::$remoteHostname === null) self::$remoteHostname = @gethostbyaddr($ip);
-			    if (!self::$remoteHostname) self::$is->$ua_string = true;
+				if ($hostname_regex && (self::$remoteHostname === null)) self::$remoteHostname = @gethostbyaddr($ip);
+			    if (!$hostname_regex || !self::$remoteHostname) self::$is->$ua_string = true;
 			    else if (self::$remoteHostname == $ip) self::$is->$ua_string = true;
 			    else self::$is->$ua_string = preg_match('#' . preg_quote($hostname_regex, '#') . '#si', self::$remoteHostname) ? true : false;				
 		    }
