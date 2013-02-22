@@ -12,7 +12,8 @@ class NOCMS {
 	public static $template = 'default';
 	public static $content = '';
 
-	protected static $isGooglebot = null;
+	protected static $is = null;
+	protected static $remoteHostname = null;
 	protected static $cachable = true;
 	protected static $html = '';
 
@@ -30,17 +31,21 @@ class NOCMS {
 		return $content;
 	}
 	
-	public static function is_googlebot() {
-		if (self::$isGooglebot === null) {
+	public static function is($ua_string, $hostname_regex) {
+		if (self::$is === null) self::$is = new StdClass;
+		if (!property_exists(self::$is, $ua_string)) {
 			self::$cachable = false;
 			$ua = $_SERVER['HTTP_USER_AGENT'];
 			$ip = $_SERVER['REMOTE_ADDR'];
-		    if (stripos($ua, 'google') === false) self::$isGooglebot = false;
-		    else if (!$hostname = @gethostbyaddr($ip)) self::$isGooglebot = true;
-		    else if ($hostname == $ip) self::$isGooglebot = true;
-		    else self::$isGooglebot = preg_match('#\.google(bot)?\.com$#si', $hostname) ? true : false;
+		    if (stripos($ua, $ua_string) === false) self::$is->$ua_string = false; 
+			else {
+				if (self::$remoteHostname === null) self::$remoteHostname = @gethostbyaddr($ip);
+			    if (!self::$remoteHostname) self::$is->$ua_string = true;
+			    else if (self::$remoteHostname == $ip) self::$is->$ua_string = true;
+			    else self::$is->$ua_string = preg_match('#' . preg_quote($hostname_regex, '#') . '#si', self::$remoteHostname) ? true : false;				
+		    }
 		}
-		return self::$isGooglebot;
+		return self::$is->$ua_string;
 	}
 
 	protected static function write_cache() {
@@ -69,7 +74,6 @@ class NOCMS {
 				}
 				self::$html = ob_get_clean();
 				if (self::$cachable) self::write_cache();
-				else foreach (self::$headers as $k=>$v) header(sprintf('%s: %s', $k, $v), true);
 			} else {
 				header('X-Robots-Tag: noindex, follow, noarchive', true, 204);
 				self::$html = 'Unknown template file';
@@ -80,7 +84,6 @@ class NOCMS {
 				ob_start();
 				include sprintf(dirname(__FILE__) . self::templates, '404');
 				self::$html = ob_get_clean();
-				foreach (self::$headers as $k=>$v) header(sprintf('%s: %s', $k, $v), true);
 			} else {
 				self::$html = 'Page not found';
 			}
