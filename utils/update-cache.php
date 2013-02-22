@@ -1,9 +1,12 @@
 <?php
 /* 
+ * Script is currently desactived due to some problems with headers management.
  * Quickly regenerate static files.
  * You don't really need it, another way is to regulary empty the .cache directory...
  *
  */
+
+die('Desactived');
  
 set_time_limit(0);
 
