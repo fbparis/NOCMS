@@ -1,12 +1,9 @@
 <?php
 /* 
- * Script is currently desactived due to some problems with headers management.
  * Quickly regenerate static files.
  * You don't really need it, another way is to regulary empty the .cache directory...
  *
  */
-
-die('Desactived');
  
 set_time_limit(0);
 
@@ -31,7 +28,7 @@ while (@count($stack)) {
 			if (in_array($m[1], $exclude_file)) continue;
 			$_SERVER['REQUEST_URI'] = $dirname . $m[1];
 			if (class_exists('NOCMS')) {
-				NOCMS::set_template('default');
+				NOCMS::template('default');
 				NOCMS::$lastModified = 0;
 				NOCMS::init();
 			} else {

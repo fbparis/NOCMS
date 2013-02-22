@@ -15,6 +15,6 @@
 	</head>
 	<body>
 		<h1><?php echo $pageTitle ? $pageTitle : $metaTitle; ?></h1>
-		<?php echo NOCMS::$content; ?>
+		<?php NOCMS::the_content(); ?>
 	</body>
 </html>
