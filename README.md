@@ -128,4 +128,6 @@ NOCMS class provides a few public properties and methods you can use in your tem
 Tips and tricks
 ---------------
 
+This documentation is longer than the code itself so you better check the index.php file or try it if you want to go further.
 
+Anyway, I'll add some other templates and pages examples, just take a look.
