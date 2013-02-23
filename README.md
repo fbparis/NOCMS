@@ -107,8 +107,23 @@ NOCMS class provides a few public properties and methods you can use in your tem
 	_void NOCMS::add_header(string $name, string $value\[, boolean $force = false\])_
 	
 	Use this method if you need to send custom headers. Calling this method will also prevent the page to be cached.
+	
 	Also, with this method headers sent in the page (file in .pages/ folder) will override headers sent in your template file.
+	
 	If you want some header sent in your template file not to be overriden, just call the method with $force parameter set to "true" in your template file.
+* **method NOCMS::is()**
+
+	_boolean NOCMS::is(string $user_agent\[, string $regex_hostname = ''\])_
+	
+	Use this method if you need to serve a different content according to the User-Agent or Hostname of the visitor. Calling this method will also prevent the page to be cached.
+	
+	First parameter is a string you want to test the presence or not in the User-Agent string of the Visitor.
+	
+	Second parameter is a regular expression you want to use to check the host name of the visitor.
+	
+	Here are some examples:
+	* Detecting Internet Explorer browser: NOCMS::is('msie');
+	* Detecting the googlebot: NOCMS::is('google', '\.google(bot)?\.com$');
 
 Tips and tricks
 ---------------
