@@ -62,9 +62,9 @@ NOCMS class provides a few public properties and methods you can use in your tem
 
 * **method NOCMS::template()**
 
-    _void NOCMS::template(string)_
+    _void NOCMS::template(string $template)_
     
-    Set the template which will be used to render the page. By default the template in use is "default". The parameter string must be the name of a template file in your .templates/ folder without the .php extension (ie "default" for ".templates/default.php").
+    Set the template which will be used to render the page. By default the template in use is "default". The parameter $template must be the name of a template file in your .templates/ folder without the .php extension (ie "default" for ".templates/default.php").
     
     _string NOCMS::template()_ 
     
@@ -79,7 +79,7 @@ NOCMS class provides a few public properties and methods you can use in your tem
     Set this to NULL to prevent sending a Last-Modified header (you should'nt need it anyway).
 * **method NOCMS::lastModified()**
 
-    _void NOCMS::lastModified(integer)_
+    _void NOCMS::lastModified(integer $timestamp)_
     
     If the timestamp you've passed is a more recent date than the last modified date automatically found by NOCMS, it will be used in the Last-Modified header sent. You can use it for example if you're displaying content from a database and you want to sent an accurate Last-modified header.
 * **method NOCMS::uri()**
@@ -97,6 +97,18 @@ NOCMS class provides a few public properties and methods you can use in your tem
 	_void NOCMS::nocache()_
 	
 	Prevents a page to be cached.
+* **method NOCMS::file_get_contents()**
+
+	_string NOCMS::file_get_contents(string $filename)_
+	
+	Same as file_get_contents($filename) but it will update NOCMS::$lastModified on success. You should use it instead of file_get_contents() so.
+* **method NOCMS::add_header()**
+
+	_void NOCMS::add_header(string $name, string $value\[, boolean $force = false\])_
+	
+	Use this method if you need to send custom headers. Calling this method will also prevent the page to be cached.
+	Also, with this method headers sent in the page (file in .pages/ folder) will override headers sent in your template file.
+	If you want some header sent in your template file not to be overriden, just call the method with $force parameter set to "true" in your template file.
 
 Tips and tricks
 ---------------
