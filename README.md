@@ -50,11 +50,13 @@ NOCMS class provides a few public properties and methods you can use in your tem
 * **property NOCMS::$content**
 
     _string NOCMS::$content_
+    
+    The output rendered by the requested page (the php file in your .pages/ folder matching the requested URL).
 * **method NOCMS::the_content()**
 
     _void NOCMS::the_content()_
-
-
+    
+    This is a shortcut for "echo NOCMS::$content;".
 
 ### In your pages:
 
@@ -63,8 +65,6 @@ NOCMS class provides a few public properties and methods you can use in your tem
     _void NOCMS::template(string)_
      OR 
     _string NOCMS::template()_ 
-
-
 
 ### In your templates or pages:
 
