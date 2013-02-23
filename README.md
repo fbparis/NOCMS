@@ -86,12 +86,12 @@ NOCMS class provides a few public properties and methods you can use in your tem
 
     _string NOCMS::uri()_
     
-    Returns $_SERVER['REQUEST_URI'] without the query part (ie for "http://example.com/test.php?args=1" it will return "/test.php").
+    Returns $_SERVER\['REQUEST_URI'\] without the query part (ie for "http://example.com/test.php?args=1" it will return "/test.php").
 * **method NOCMS::args()**
 	
 	_string NOCMS::args()_
 	
-	Returns $_SERVER['QUERY_STRING'] (ie for "http://example.com/test.php?args=1" it will return "args=1").
+	Returns $_SERVER\['QUERY_STRING'\] (ie for "http://example.com/test.php?args=1" it will return "args=1").
 * **method NOCMS::nocache()**
 
 	_void NOCMS::nocache()_
