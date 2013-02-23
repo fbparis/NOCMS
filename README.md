@@ -72,6 +72,17 @@ NOCMS class provides a few public properties and methods you can use in your tem
 
 ### In your templates or pages:
 
+* **property NOCMS::$lastModified**
+
+    _integer NOCMS::$lastModified_
+    
+    Set this to NULL to prevent sending a Last-Modified header (you should'nt need it anyway).
+* **method NOCMS::lastModified()**
+
+    _void NOCMS::lastModified(integer)_
+    
+    If the timestamp you've passed is a more recent date than the timestamp automatically found by NOCMS, it will be used in the Last-Modified header sent.
+
 Tips and tricks
 ---------------
 
