@@ -53,7 +53,7 @@ class NOCMS {
 		return $content;
 	}
 	
-	public static function is($ua_string, $hostname_regex) {
+	public static function is($ua_string, $hostname_regex='') {
 		self::$cachable = false;
 		if (self::$is === null) self::$is = new StdClass;
 		if (!property_exists(self::$is, $ua_string)) {
