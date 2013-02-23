@@ -81,7 +81,17 @@ NOCMS class provides a few public properties and methods you can use in your tem
 
     _void NOCMS::lastModified(integer)_
     
-    If the timestamp you've passed is a more recent date than the timestamp automatically found by NOCMS, it will be used in the Last-Modified header sent.
+    If the timestamp you've passed is a more recent date than the last modified date automatically found by NOCMS, it will be used in the Last-Modified header sent. You can use it for example if you're displaying content from a database and you want to sent an accurate Last-modified header.
+* **method NOCMS::uri()**
+
+    _string NOCMS::uri()_
+    
+    Returns $_SERVER['REQUEST_URI'] without the query part (ie for "http://example.com/test.php?args=1" it will return "/test.php").
+* **method NOCMS::args()**
+	
+	_string NOCMS::args()_
+	
+	Returns $_SERVER['QUERY_STRING'] (ie for "http://example.com/test.php?args=1" it will return "args=1").
 
 Tips and tricks
 ---------------
