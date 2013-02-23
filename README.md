@@ -63,8 +63,12 @@ NOCMS class provides a few public properties and methods you can use in your tem
 * **method NOCMS::template()**
 
     _void NOCMS::template(string)_
-     OR 
+    
+    Set the template which will be used to render the page. By default the template in use is "default". The parameter string must be the name of a template file in your .templates/ folder without the .php extension (ie "default" for ".templates/default.php").
+    
     _string NOCMS::template()_ 
+    
+    Will return the name of the template currently in use (ie "default" for ".templates/default.php").
 
 ### In your templates or pages:
 
