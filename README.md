@@ -47,24 +47,22 @@ NOCMS class provides a few public properties and methods you can use in your tem
 
 ### In your templates
 
-**property NOCMS::$content**
-
+####property NOCMS::$content
 _string NOCMS::$content_
 
 
-**method NOCMS::the_content()**
-
+####method NOCMS::the_content()
 _void NOCMS::the_content()_
 
 
 
 ### In your pages
 
-**method NOCMS::template()**
-
+####method NOCMS::template()
 _void NOCMS::template(string)_
-
+ OR 
 _string NOCMS::template()_ 
+
 
 
 ### In your templates or pages
