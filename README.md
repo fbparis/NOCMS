@@ -1,7 +1,7 @@
 NOCMS
 =====
 
-NOCMS is a minimalist yet powerful system to serve and cache HTML / PHP pages.
+NOCMS is a minimalist yet powerful system to serve and cache HTML / PHP pages. You can see a live example on [http://nocms.fbparis.com/].
 
 It comes with some goodies such as sample robots.txt, sitemap.php, tips to refresh the cache and some example pages but all you need to start is:
 * a configuration file for your web server (a working configuration for nginx is provided)
