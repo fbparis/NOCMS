@@ -3,6 +3,11 @@
  * Quickly regenerate static files.
  * You don't really need it, another way is to regulary empty the .cache directory...
  *
+ * If you choose to use it, here are a few IMPORTANT advices:
+ * - DO NOT USE include_once or require_once in your pages / templates, use include or require instead
+ * - In index.php, call the NOCMS::init() like this: NOCMS::init(@$_SERVER['HTTP_HOST'] ? false : true); (so the cache will be generated only by this script)
+ * - In your crontab, call this script like this: php-cgi -q PATH/update-cache.php where PATH is the absolute path to update-cache.php
+ *
  */
  
 set_time_limit(0);
