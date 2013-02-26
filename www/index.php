@@ -64,7 +64,7 @@ class NOCMS {
 				if ($hostname_regex && (self::$remoteHostname === null)) self::$remoteHostname = @gethostbyaddr($ip);
 			    if (!$hostname_regex || !self::$remoteHostname) self::$is->$ua_string = true;
 			    else if (self::$remoteHostname == $ip) self::$is->$ua_string = true;
-			    else self::$is->$ua_string = preg_match('#' . preg_quote($hostname_regex, '#') . '#si', self::$remoteHostname) ? true : false;				
+			    else self::$is->$ua_string = preg_match('#' . str_replace('#', '\#', $hostname_regex) . '#si', self::$remoteHostname) ? true : false;				
 		    }
 		}
 		return self::$is->$ua_string;
