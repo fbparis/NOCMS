@@ -1,5 +1,5 @@
 <?php
-include_once dirname(__FILE__) . '/../stuff/session.php';
+NOCMS::import(dirname(__FILE__) . '/../stuff/session.php');
 
 if (@$_POST['custom_text']) {
 	$_SESSION['text'] = trim(strip_tags(stripslashes($_POST['custom_text'])));
