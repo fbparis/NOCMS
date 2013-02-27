@@ -15,7 +15,6 @@ class NOCMS {
 	protected static $remoteHostname = null;
 	protected static $cachable = true;
 	protected static $html = '';
-	protected static $lambda = null;
 	
 	public static function uri() {
 		return self::$uri;
@@ -47,20 +46,6 @@ class NOCMS {
 	
 	public static function nocache() {
 		self::$cachable = false;
-	}
-	
-	public static function import() {
-		if (func_num_args() != 1) {
-			trigger_error('Invalid arguments for NOCMS::import() method');
-		} else if (is_readable(func_get_arg(0))) {
-			self::lastModified(filemtime(func_get_arg(0)));
-			extract($GLOBALS, EXTR_REFS);
-			include func_get_arg(0);
-			foreach(array_diff(array_keys(get_defined_vars()), array_keys($GLOBALS)) as self::$lambda) $GLOBALS[self::$lambda] =& ${self::$lambda}; 
-		} else {
-			self::$lambda = func_get_arg(0);
-			trigger_error(sprintf('Include file not found: %s', self::$lambda));
-		}
 	}
 	
 	public static function file_get_contents($f) {
@@ -97,20 +82,19 @@ class NOCMS {
 	
 	public static function init($cache=true) {
 		header('X-Powered-By: https://github.com/fbparis/NOCMS', true);
-		self::$lastModified = filemtime(__FILE__);
-		self::$headers = array();
 		list(self::$uri, self::$args) = preg_split('/\?/s', $_SERVER['REQUEST_URI'], 2);
 		self::$uri = preg_replace('#/[/.~]+#s', '/', self::$uri);		
 		self::$cachable = $cache && !self::$args && in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'));
 		$page = dirname(__FILE__) . sprintf(self::pages, self::$uri);
 		if (is_readable($page)) {
 			ob_start();
-			self::import($page);
+			include $page;
 			self::$content = ob_get_clean();
 			if (is_readable(dirname(__FILE__) . sprintf(self::templates, self::$template))) {
 				ob_start();
-				self::import(dirname(__FILE__) . sprintf(self::templates, self::$template));
+				include dirname(__FILE__) . sprintf(self::templates, self::$template);
 				if ((self::$lastModified !== null) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
+					foreach (get_included_files() as $filename) self::lastModified(@filemtime($filename));
 					header('Last-Modified: ' . gmdate('D, d M Y H:i:s T', self::$lastModified), true);
 				}
 				foreach (self::$headers as $name=>$value) header("$name: $value");
@@ -123,7 +107,7 @@ class NOCMS {
 		} else {
 			if (is_readable(dirname(__FILE__) . sprintf(self::templates, '404'))) {
 				ob_start();
-				self::import(sprintf(dirname(__FILE__) . self::templates, '404'));
+				include sprintf(dirname(__FILE__) . self::templates, '404');
 				foreach (self::$headers as $name=>$value) header("$name: $value");
 				self::$html = ob_get_clean();
 			} else {

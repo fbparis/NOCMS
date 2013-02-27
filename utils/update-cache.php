@@ -3,14 +3,16 @@
  * Quickly regenerate static files.
  * You don't really need it, another way is to regulary empty the .cache directory...
  *
- * If you choose to use it, here are a few IMPORTANT advices:
- * - DO NOT USE include_once or require_once in your pages / templates, use NOCMS::import() method instead, or at least include or require
+ * If you choose to use it, here are a few advices:
  * - In index.php, call the NOCMS::init() like this: NOCMS::init(@$_SERVER['HTTP_HOST'] ? false : true); (so the cache will be generated only by this script)
- * - In your crontab, call this script like this: php-cgi -q PATH/update-cache.php where PATH is the absolute path to update-cache.php
+ * - In your crontab, call this script like this: php PATH/update-cache.php where PATH is the absolute path to update-cache.php
+ * - Keep parser.php in the same folder than update-cache.php or update $parser variable.
  *
  */
  
 set_time_limit(0);
+
+$parser = str_replace('%', '%%', dirname(__FILE__)) . '/parser.php "%s"';
 
 $exclude_file = array();
 $exclude_dir = array();
@@ -18,8 +20,6 @@ $exclude_dir = array();
 $base = dirname(__FILE__) . '/../www/.pages';
 $cache_mask = str_replace('%', '%%', dirname(__FILE__)) . '/../www/.cache%s%s.html';
 $stack = array($base);
-
-$_SERVER['REQUEST_METHOD'] = 'HEAD';
 
 while (@count($stack)) {
 	$d = dir(array_shift($stack));
@@ -32,13 +32,7 @@ while (@count($stack)) {
 		} else if (preg_match('#^(.*)\.php$#s', $entry, $m)) {
 			if (in_array($m[1], $exclude_file)) continue;
 			@unlink(sprintf($cache_mask, $dirname, $m[1]));
-			$_SERVER['REQUEST_URI'] = $dirname . $m[1];
-			if (class_exists('NOCMS')) {
-				NOCMS::template('default');
-				NOCMS::init();
-			} else {
-				include_once dirname(__FILE__) . '/../www/index.php';
-			}
+			shell_exec('php ' . sprintf($parser, $dirname . $m[1]));
 		}
 	}
 }

@@ -99,13 +99,6 @@ NOCMS class provides a few public properties and methods you can use in your tem
 	_void NOCMS::nocache()_
 	
 	Prevents a page to be cached.
-* **method NOCMS::import()**
-	
-	_void / string NOCMS::import(string $filename)_
-	
-	Use this method instead of include, include_once, require, require_once if you want NOCMS to calculate a correct timestamp for the Last-Modified header.
-	
-	Calling this method is the same than calling "include $filename".
 * **method NOCMS::file_get_contents()**
 
 	_string NOCMS::file_get_contents(string $filename)_
