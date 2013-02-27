@@ -58,7 +58,8 @@ class NOCMS {
 			include func_get_arg(0);
 			foreach(array_diff(array_keys(get_defined_vars()), array_keys($GLOBALS)) as self::$lambda) $GLOBALS[self::$lambda] =& ${self::$lambda}; 
 		} else {
-			trigger_error(sprintf('Include file not found: %s', func_get_arg(0)));
+			self::$lambda = func_get_arg(0);
+			trigger_error(sprintf('Include file not found: %s', self::$lambda));
 		}
 	}
 	
