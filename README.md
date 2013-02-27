@@ -79,9 +79,11 @@ NOCMS class provides a few public properties and methods you can use in your tem
     Set this to NULL to prevent sending a Last-Modified header (you should'nt need it anyway).
 * **method NOCMS::lastModified()**
 
-    _void NOCMS::lastModified(integer $timestamp)_
+    _integer NOCMS::lastModified([integer $timestamp])_
     
-    If the timestamp you've passed is a more recent date than the last modified date automatically found by NOCMS, it will be used in the Last-Modified header sent. You can use it for example if you're displaying content from a database and you want to sent an accurate Last-modified header.
+    If you pass a timestamp and this timestamp is a more recent date than the last modified date automatically found by NOCMS, it will be used in the Last-Modified header sent. You can use it for example if you're displaying content from a database and you want to sent an accurate Last-modified header.
+    
+    Returns the current Last-Modified timestamp.
 * **method NOCMS::uri()**
 
     _string NOCMS::uri()_
@@ -97,6 +99,13 @@ NOCMS class provides a few public properties and methods you can use in your tem
 	_void NOCMS::nocache()_
 	
 	Prevents a page to be cached.
+* **method NOCMS::import()**
+	
+	_void / string NOCMS::import(string $filename)_
+	
+	Use this method instead of include, include_once, require, require_once if you want NOCMS to calculate a correct timestamp for the Last-Modified header.
+	
+	Calling this method is the same than calling "include $filename".
 * **method NOCMS::file_get_contents()**
 
 	_string NOCMS::file_get_contents(string $filename)_
