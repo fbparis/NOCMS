@@ -73,8 +73,8 @@ class NOCMS {
 
 	protected static function write_cache() {
 		$filename = dirname(__FILE__) . sprintf(self::cache, self::$uri);
-		@mkdir(dirname($filename), 0777, true);
-		if ((self::$lastModified == null) || (@filemtime($filename) <= self::$lastModified)) {
+		if ((self::$lastModified === null) || (@filemtime($filename) <= self::$lastModified)) {
+			if (!is_dir(dirname($filename))) @mkdir(dirname($filename), 0777, true);
 			@file_put_contents($filename, self::$html);
 			@chmod($filename, 0666);			
 		} 
